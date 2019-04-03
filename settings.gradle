@@ -1,0 +1,4 @@
+rootProject.name = 'better-late-than-never'
+include 'web'
+include 'service'
+include 'repository'
