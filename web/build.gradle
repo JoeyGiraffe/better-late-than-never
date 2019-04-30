@@ -1,36 +1,5 @@
 dependencies {
     implementation project (":service")
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
-}
-
-task copyResources(type: Copy, dependsOn: [compileJava, processResources]) {
-    from 'build/resources/main'
-    into 'build/libs/'
-}
-
-// 复制第三方依赖至指定目录
-task copydDependencies(type: Copy, dependsOn: [copyResources]) {
-    from configurations.runtimeClasspath
-    into 'build/libs/lib'
-}
-
-// 打成一个可执行的jar包，不含第三方依赖
-task executableJar(type:Jar, dependsOn: [copydDependencies]) {
-    // 指定当前模块
-    from 'build/classes/java/main'
-//    from sourceSets.main.runtimeClasspath
-    manifest {
-        // 加入依赖的jar包路径
-        def manifestClassPath = "./ " + configurations.runtimeClasspath.collect {'lib/'+it.getName()}.join(' ')
-        attributes(
-                "Implementation-Title": "Multi-module Gradle Build",
-                "Class-Path": manifestClassPath,
-                "Main-Class": "orz.joey.web.WebApplication"
-        )
-    }
-}
-
-artifacts {
-    archives executableJar
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }

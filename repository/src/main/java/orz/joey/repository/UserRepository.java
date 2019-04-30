@@ -6,7 +6,7 @@ import orz.joey.repository.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // 将自动根据方法名构建sql语句
+    // 根据方法名自动构建sql语句
     User findByCellphone(String cellphone);
 
 }

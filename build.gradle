@@ -11,36 +11,112 @@ buildscript {
     dependencies {
         classpath ('io.spring.gradle:dependency-management-plugin:' + dependencyManagementPluginVersion)
         classpath ('org.springframework.boot:spring-boot-gradle-plugin:' + springBootVersion)
-
     }
 }
 
 allprojects {
     apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+
+    apply plugin: 'io.spring.dependency-management'
 
     group 'orz.joey'
     version '1.0-SNAPSHOT'
 
+    // JVM版本号要求
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    // JAVA编译的时候缺省状态下会因为中文字符而失败
+    [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
     repositories {
         mavenCentral()
+//        maven {
+//            // 添加仓库地址
+//            url ''
+//        }
     }
 
-    jar {
-        enabled = true
+    bootJar {
+        // 不执行bootJar
+        enabled = false
     }
-
-}
-
-subprojects {
-    apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'org.springframework.boot'
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    }
+}
+
+subprojects {
+
+    dependencies {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 
+    // bootJar会默认把jar设置为false
+    jar {
+        enabled = true
+    }
 }
+
+// rootProject引入子模块的全部jar包依赖
+dependencies {
+    subprojects.each {
+        implementation project (":$it.name")
+    }
+}
+
+// 拷贝配置文件
+task copyResources(type: Copy, dependsOn: [compileJava, processResources]) {
+    def webProject = subprojects.find { it.name == 'web' }
+    if (webProject != null) {
+        from "$webProject.buildDir/resources/main"
+        into "$buildDir/libs"
+    }
+}
+
+// 拷贝各子模块下的源文件
+task copySource(type: Copy, dependsOn: [copyResources]) {
+    subprojects {
+        from "$buildDir/classes"
+    }
+    into "$buildDir/classes"
+}
+
+// 复制第三方依赖至指定目录
+//task copydDependencies(type: Copy, dependsOn: [copyResources]) {
+task copydDependencies(type: Copy) {
+    from configurations.runtimeClasspath
+    subprojects {
+        // 排除子模块打的独立jar包
+        exclude jar.archiveName
+    }
+    into 'build/libs/lib'
+}
+
+// 打成一个可执行的jar包，不含第三方依赖
+task executableJar(type:Jar, dependsOn: [copySource, copydDependencies]) {
+    // 指定编译的源文件目录
+    from sourceSets.main.output.classesDir
+    // 写入MANIFEST.MF
+    manifest {
+        def manifestClassPath = "./ " + configurations.runtimeClasspath.collect {'lib/'+it.getName()}.join(' ')
+        attributes(
+                "Implementation-Title": "Multi-module Gradle Project Build",
+                // 加入依赖的jar包路径
+                "Class-Path": manifestClassPath,
+                "Main-Class": "orz.joey.web.WebApplication"
+        )
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+artifacts {
+    archives executableJar
+}
+
+

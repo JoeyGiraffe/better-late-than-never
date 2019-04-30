@@ -6,6 +6,8 @@ import orz.joey.repository.entity.User;
 import orz.joey.service.UserService;
 import orz.joey.service.dto.UserDto;
 import org.springframework.stereotype.Service;
+import orz.joey.service.dto.common.ErrorCode;
+import orz.joey.service.exception.BusinessException;
 
 import java.util.Optional;
 
@@ -21,15 +23,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Long userId) {
-        UserDto userDto = new UserDto();
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        userOptional.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         //po -> dto
-        user.ifPresent(u -> {
-            userDto.setId(u.getId());
-            userDto.setUsername(u.getUsername());
-            userDto.setCellphone(u.getCellphone());
-            userDto.setEmail(u.getEmail());
-        });
-        return userDto;
+        return userOptional.map(user -> {
+            UserDto userDto = new UserDto();
+            userDto.setId(user.getId());
+            userDto.setUsername(user.getUsername());
+            userDto.setCellphone(user.getCellphone());
+            userDto.setEmail(user.getEmail());
+            return userDto;
+        }).get();
     }
 }

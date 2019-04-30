@@ -28,7 +28,7 @@ public class RestControllerResponse implements ResponseBodyAdvice {
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
 //        return !converterType.equals(StringHttpMessageConverter.class);
-        return true;//执行beforeBodyWrite()
+        return true;//总是执行beforeBodyWrite()
     }
 
     @Override
@@ -36,10 +36,9 @@ public class RestControllerResponse implements ResponseBodyAdvice {
         if (body instanceof Response) {
             return body;
         }
-//        if (body instanceof ErrorCode) {
-//            ErrorCode errorCode = (ErrorCode) body;
-//            return new Response<>(errorCode);
-//        }
+        if (body instanceof ErrorCode) {
+            return new Response<>((ErrorCode) body);
+        }
         if (selectedConverterType.equals(StringHttpMessageConverter.class)) {
             try {
                 return mapper.writeValueAsString(new Response<>(body));
@@ -47,6 +46,7 @@ public class RestControllerResponse implements ResponseBodyAdvice {
                 e.printStackTrace();
             }
         }
+
         return new Response<>(body);
     }
 }
