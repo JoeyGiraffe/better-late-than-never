@@ -3,7 +3,7 @@ package orz.joey.web.common;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import orz.joey.service.dto.common.ErrorCode;
+import orz.joey.service.dto.common.CustomError;
 import orz.joey.service.dto.common.Response;
 import orz.joey.service.exception.BusinessException;
 
@@ -19,6 +19,6 @@ public class GlobalExceptionHandler {
             return new Response<>(((BusinessException) e).getCode(), e.getMessage());
         }
 
-        return new Response<>(ErrorCode.INTERNAL_SERVER_ERROR);
+        return new Response<>(CustomError.INTERNAL_SERVER_ERROR);
     }
 }

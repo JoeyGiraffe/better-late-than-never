@@ -11,7 +11,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import orz.joey.service.dto.common.ErrorCode;
+import orz.joey.service.dto.common.CustomError;
 import orz.joey.service.dto.common.Response;
 
 // 指向所有带有注解@RestController的控制器
@@ -36,8 +36,8 @@ public class RestControllerResponse implements ResponseBodyAdvice {
         if (body instanceof Response) {
             return body;
         }
-        if (body instanceof ErrorCode) {
-            return new Response<>((ErrorCode) body);
+        if (body instanceof CustomError) {
+            return new Response<>((CustomError) body);
         }
         if (selectedConverterType.equals(StringHttpMessageConverter.class)) {
             try {

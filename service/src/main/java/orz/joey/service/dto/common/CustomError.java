@@ -1,6 +1,6 @@
 package orz.joey.service.dto.common;
 
-public enum ErrorCode {
+public enum CustomError {
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
 
 
@@ -12,7 +12,7 @@ public enum ErrorCode {
     private int code;
     private String msg;
 
-    ErrorCode(int code, String msg) {
+    CustomError(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -25,9 +25,9 @@ public enum ErrorCode {
         return msg;
     }
 
-    public static ErrorCode fromCode(int code) {
-        ErrorCode[] values = ErrorCode.values();
-        for (ErrorCode val : values) {
+    public static CustomError fromCode(int code) {
+        CustomError[] values = CustomError.values();
+        for (CustomError val : values) {
             if (val.getCode() == code) return val;
         }
 

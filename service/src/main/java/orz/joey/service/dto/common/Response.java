@@ -12,9 +12,9 @@ public class Response<T> implements Serializable {
         this.data = data;
     }
 
-    public Response(ErrorCode errorCode) {
-        this.code = errorCode.getCode();
-        this.msg = errorCode.getMsg();
+    public Response(CustomError error) {
+        this.code = error.getCode();
+        this.msg = error.getMsg();
     }
 
     public Response(int code, String msg) {

@@ -77,7 +77,7 @@ task copyResources(type: Copy, dependsOn: [compileJava, processResources]) {
 }
 
 // 拷贝各子模块下的源文件
-task copySource(type: Copy, dependsOn: [copyResources]) {
+task copySource(type: Copy) {
     subprojects {
         from "$buildDir/classes"
     }
@@ -85,7 +85,6 @@ task copySource(type: Copy, dependsOn: [copyResources]) {
 }
 
 // 复制第三方依赖至指定目录
-//task copydDependencies(type: Copy, dependsOn: [copyResources]) {
 task copydDependencies(type: Copy) {
     from configurations.runtimeClasspath
     subprojects {
@@ -96,7 +95,7 @@ task copydDependencies(type: Copy) {
 }
 
 // 打成一个可执行的jar包，不含第三方依赖
-task executableJar(type:Jar, dependsOn: [copySource, copydDependencies]) {
+task executableJar(type:Jar, dependsOn: [copyResources, copySource, copydDependencies]) {
     // 指定编译的源文件目录
     from sourceSets.main.output.classesDir
     // 写入MANIFEST.MF
