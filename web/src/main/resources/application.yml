@@ -17,9 +17,15 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
-  mvc:
-    # 无对应异常处理器时直接抛出
-    throw-exception-if-no-handler-found: true
-  resources:
-    # 工程中的资源文件不建立映射
-    add-mappings: false
+#  mvc:
+#    view:
+#      prefix: /templates/
+#      suffix: .html
+#    static-path-pattern: /resources/**
+#  resources:
+#    static-locations: classpath:/templates/
+#    # 无对应异常处理器时直接抛出
+#    throw-exception-if-no-handler-found: true
+#  resources:
+#    # 工程中的资源文件不建立映射
+#    add-mappings: false
