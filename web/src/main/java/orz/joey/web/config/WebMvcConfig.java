@@ -28,7 +28,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // 请求路径:/404   跳转视图文件：/error/404
+        // 请求路径:/404   跳转视图文件：error/404
         registry.addViewController("/404").setViewName("error/404");
         registry.addViewController("/500").setViewName("error/500");
     }

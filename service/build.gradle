@@ -1,3 +1,4 @@
 dependencies {
     implementation project (":repository")
+    implementation group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
 }

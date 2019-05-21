@@ -1,11 +1,13 @@
 package orz.joey.service.dto.common;
 
 public enum CustomError {
+
+    ARGUMENT_TYPE_MISMATCH(400, "Argument Type Mismatch"),
+
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
 
 
-    USER_NOT_FOUND(10000, "User not found"),
-
+    USER_NOT_FOUND(10001, "User Not Found"),
 
     ;
 
@@ -25,12 +27,4 @@ public enum CustomError {
         return msg;
     }
 
-    public static CustomError fromCode(int code) {
-        CustomError[] values = CustomError.values();
-        for (CustomError val : values) {
-            if (val.getCode() == code) return val;
-        }
-
-        return INTERNAL_SERVER_ERROR;
-    }
 }
