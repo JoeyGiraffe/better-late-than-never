@@ -17,10 +17,18 @@ public class UserMapping extends ConfigurableMapper {
     @Override
     protected void configure(MapperFactory factory) {
         factory.classMap(User.class, UserDto.class)
+                .fieldBToA("password", "password")
                 .customize(new CustomMapper<User, UserDto>() {
                     @Override
                     public void mapAtoB(User user, UserDto userDto, MappingContext context) {
-                        userDto.setCellphone(user.getCellphone().substring(0, 3)+"****"+user.getCellphone().substring(user.getCellphone().length()-4));
+                        if (user.getCellphone()!=null && user.getCellphone().length()>7)
+                            userDto.setCellphone(user.getCellphone().substring(0, 3)+"****"+user.getCellphone().substring(user.getCellphone().length()-4));
+                    }
+
+                    @Override
+                    public void mapBtoA(UserDto userDto, User user, MappingContext context) {
+                        //todo hash
+                        user.setPassword(userDto.getPassword());
                     }
                 })
                 .byDefault()

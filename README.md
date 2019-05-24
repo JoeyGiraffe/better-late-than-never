@@ -6,6 +6,6 @@ TODO:
 - [x] 异常处理，及404、500页面跳转
 - [x] orika——Java Bean映射
 - [ ] swagger——自动生成接口文档
-- [ ] hibernate-validator——数据校验
+- [x] hibernate-validator——数据校验
 - [ ] 热部署
 

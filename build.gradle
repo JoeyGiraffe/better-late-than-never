@@ -97,7 +97,7 @@ task copydDependencies(type: Copy) {
 // 打成一个可执行的jar包，不含第三方依赖
 task executableJar(type:Jar, dependsOn: [copyResources, copySource, copydDependencies]) {
     // 指定编译的源文件目录
-    from sourceSets.main.output.classesDir
+    from sourceSets.main.output.classesDirs
     // 写入MANIFEST.MF
     manifest {
         def manifestClassPath = "./ " + configurations.runtimeClasspath.collect {'lib/'+it.getName()}.join(' ')

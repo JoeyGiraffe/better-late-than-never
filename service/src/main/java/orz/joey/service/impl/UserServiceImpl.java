@@ -27,9 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        userOptional.orElseThrow(() -> new BusinessException(CustomError.USER_NOT_FOUND));
-        //po -> dto
+        try {
+            Optional<User> userOptional = userRepository.findById(userId);
+//            userOptional.orElseThrow(() -> new BusinessException(CustomError.USER_NOT_FOUND));
+            //po -> dto
 //        return userOptional.map(user -> {
 //            UserDto userDto = new UserDto();
 //            userDto.setId(user.getId());
@@ -39,6 +40,25 @@ public class UserServiceImpl implements UserService {
 //            return userDto;
 //        }).get();
 
-        return userMapping.map(userOptional.get(), UserDto.class);
+            return userOptional.map(user -> userMapping.map(user, UserDto.class)).get();
+
+        } catch (Exception e) {
+            //todo add log
+            e.printStackTrace();
+            throw new BusinessException(CustomError.USER_NOT_FOUND);
+        }
+    }
+
+    @Override
+    public UserDto save(UserDto userDto) {
+        try {
+            User user = userMapping.map(userDto, User.class);
+            User userSaved = userRepository.save(user);
+            return userMapping.map(userSaved, UserDto.class);
+        } catch (Exception e) {
+            //todo add log
+            e.printStackTrace();
+            throw new BusinessException(CustomError.ADD_USER_FAILED);
+        }
     }
 }

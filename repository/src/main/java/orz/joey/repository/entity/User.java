@@ -11,14 +11,15 @@ import java.sql.Timestamp;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable = false, updatable = false)
     private Long id;
     @Column(nullable = false, length = 32)
     private String username;
     @Column(nullable = false, length = 64)
     private String password;
-    @Column(length = 16, unique = true)
+    @Column(nullable = false, length = 16, unique = true)
     private String cellphone;
-    @Column(length = 64 , unique = true)
+    @Column(length = 64)
     private String email;
     @Column(nullable = false, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间'", insertable = false, updatable = false)
     private Timestamp createTime;
