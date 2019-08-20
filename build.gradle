@@ -46,6 +46,12 @@ subprojects {
     jar {
         enabled = true
     }
+    
+    sourceSets {
+        test {
+            java.srcDirs = ["$project.name/src/test/java"]
+        }
+    }
 }
 
 // rootProject引入子模块的全部jar包依赖
