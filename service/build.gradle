@@ -2,4 +2,10 @@ dependencies {
     implementation project (":repository")
     implementation group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
     implementation 'org.hibernate.validator:hibernate-validator'
+    api group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    api group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    api (group: 'io.swagger', name: 'swagger-models', version: '1.5.21') {
+        //java.lang.NumberFormatException: For input string: "" in version 1.5.20
+        force = true
+    }
 }

@@ -1,11 +1,3 @@
 # better-late-than-never
-打jar包：父模块下执行`gradle build`
-
----
-TODO:
-- [x] 异常处理，及404、500页面跳转
-- [x] orika——Java Bean映射
-- [ ] swagger——自动生成接口文档
-- [x] hibernate-validator——数据校验
-- [ ] 热部署
-
+打JAR包：`gradlew build`  
+接口文档：[swagger-ui](http://localhost:523/swagger-ui.html)

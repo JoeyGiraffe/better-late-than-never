@@ -6,31 +6,27 @@ import org.hibernate.validator.constraints.Length;
 import orz.joey.service.dto.constraints.Cellphone;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
-@ApiModel(description = "用户信息")
-public class UserDto implements Serializable {
-    private static final long serialVersionUID = -9129518669746552036L;
+@ApiModel(description = "修改用户信息")
+public class EditUserDto implements Serializable {
+    private static final long serialVersionUID = -2284153512623305443L;
 
-    @ApiModelProperty(value = "用户ID", example = "1")
+    @ApiModelProperty(value = "用户ID", required = true)
     @NotNull
     private Long id;
 
-    @ApiModelProperty(value = "用户名", required = true)
-    @NotBlank
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "登录密码", required = true)
-    @NotBlank
+    @ApiModelProperty(value = "登录密码")
     @Length(min = 8, max = 16)
     @Pattern(regexp = "^[a-zA-Z]\\w{7,15}$")
     private String password;
 
-    @ApiModelProperty(value = "手机号", required = true)
-    @NotBlank
+    @ApiModelProperty(value = "手机号")
     @Cellphone
     private String cellphone;
 
@@ -80,7 +76,7 @@ public class UserDto implements Serializable {
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "EditUserDto{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

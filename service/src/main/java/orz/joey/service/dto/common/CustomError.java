@@ -6,12 +6,13 @@ public enum CustomError {
     REQUEST_BODY_MISSING(400, "Request Body Missing"),
     MEDIA_TYPE_NOT_SUPPORTED(400, "Media Type Not Supported"),
 
+    /*用户模块*/
+    USER_NOT_FOUND(10001, "用户不存在"),
+    USER_DELETE_SUCCESS(10002, "用户删除成功"),
+    USER_DELETE_FAIL(10003, "用户删除失败"),
 
-    USER_NOT_FOUND(10001, "User Not Found"),
-    ADD_USER_FAILED(10002, "Add User Failed"),
 
     ;
-
     private int code;
     private String msg;
 

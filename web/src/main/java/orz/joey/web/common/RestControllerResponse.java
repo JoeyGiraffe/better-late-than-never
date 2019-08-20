@@ -11,8 +11,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import orz.joey.service.dto.common.BaseResponse;
 import orz.joey.service.dto.common.CustomError;
-import orz.joey.service.dto.common.Response;
 
 // 指向所有带有注解@RestController的控制器
 @ControllerAdvice(annotations = RestController.class)
@@ -33,20 +33,20 @@ public class RestControllerResponse implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (body instanceof Response) {
+        if (body instanceof BaseResponse) {
             return body;
         }
         if (body instanceof CustomError) {
-            return new Response<>((CustomError) body);
+            return new BaseResponse<>((CustomError) body);
         }
         if (selectedConverterType.equals(StringHttpMessageConverter.class)) {
             try {
-                return mapper.writeValueAsString(new Response<>(body));
+                return mapper.writeValueAsString(new BaseResponse<>(body));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
         }
 
-        return new Response<>(body);
+        return new BaseResponse<>(body);
     }
 }

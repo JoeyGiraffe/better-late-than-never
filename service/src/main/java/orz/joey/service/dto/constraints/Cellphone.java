@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(Cellphone.List.class)
 public @interface Cellphone {
 
-    String message() default " format error";
+    String message() default "{orz.joey.service.dto.constraints.Cellphone.message}";
 
     Class<?>[] groups() default { };
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-    /** 同样可在配置文件中设置*/
+    /*同样可在配置文件中设置*/
     @Bean
     public ViewResolver getViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -24,6 +24,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")//访问静态资源请求路径匹配规则
                 .addResourceLocations("classpath:/templates/");//设置静态资源目录
+
+        /*配置接口文档相关静态资源*/
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     @Override
