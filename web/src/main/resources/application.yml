@@ -29,3 +29,5 @@ spring:
 #  resources:
 #    # 工程中的资源文件不建立映射
 #    add-mappings: false
+logging:
+  config: classpath:log4j2.yml

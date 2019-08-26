@@ -32,6 +32,10 @@ allprojects {
         enabled = false
     }
 
+    configurations {
+        all*.exclude module: 'spring-boot-starter-logging'//排除默认的logback日志框架
+    }
+
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     }
@@ -39,6 +43,8 @@ allprojects {
 
 subprojects {
     dependencies {
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'//引入log4j2
+        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml'//支持yml格式
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 
