@@ -1,5 +1,6 @@
 package orz.joey.web.common;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -54,6 +55,10 @@ public class GlobalExceptionHandler {
 
         if (e instanceof EmptyResultDataAccessException) {
             return new BaseResponse<>(HttpStatus.NO_CONTENT.value(), e.getMessage());
+        }
+
+        if (e instanceof DataIntegrityViolationException) {
+            return new BaseResponse<>(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
         }
 
         return new ModelAndView("error/500");

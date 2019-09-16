@@ -1,7 +1,7 @@
-package orz.joey.service.dto.constraints.validation;
+package orz.joey.service.dto.validation;
 
 import org.springframework.util.StringUtils;
-import orz.joey.service.dto.constraints.Cellphone;
+import orz.joey.service.dto.validation.constraints.Cellphone;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

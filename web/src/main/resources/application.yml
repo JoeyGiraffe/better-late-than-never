@@ -1,10 +1,10 @@
 server:
   port: 523
 
-# mysql-8.0之后数据库配置有所不同
-# useJDBCCompliantTimezoneShift: 是否使用符合JDBC的时区转换;
-# useLegacyDatetimeCode: 是否使用旧版日期时间码;
 spring:
+  # mysql-8.0之后数据库配置有所不同
+  # useJDBCCompliantTimezoneShift: 是否使用符合JDBC的时区转换;
+  # useLegacyDatetimeCode: 是否使用旧版日期时间码;
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/better-late-than-never?useSSL=false&requireSSL=false&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
@@ -17,17 +17,19 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
-#  mvc:
-#    view:
-#      prefix: /templates/
-#      suffix: .html
-#    static-path-pattern: /resources/**
-#  resources:
-#    static-locations: classpath:/templates/
-#    # 无对应异常处理器时直接抛出
-#    throw-exception-if-no-handler-found: true
-#  resources:
-#    # 工程中的资源文件不建立映射
-#    add-mappings: false
+
 logging:
   config: classpath:log4j2.yml
+
+# customize properties
+myown:
+  caching:
+    # multiple caffeine cache
+    caffeine:
+      specs: {
+        # not support refreshAfterWrite property
+        user-cache-by-user-id: "maximumSize=100,expireAfterWrite=120s",
+        user-cache-by-user-name: "maximumSize=100,expireAfterWrite=120s",
+      }
+
+

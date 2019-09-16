@@ -1,5 +1,7 @@
 package orz.joey.service.dto.common;
 
+import orz.joey.service.dto.common.constant.CustomError;
+
 import java.io.Serializable;
 
 public class BaseResponse<T> implements Serializable {

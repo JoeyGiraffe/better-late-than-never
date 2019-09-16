@@ -1,6 +1,6 @@
-package orz.joey.service.dto.constraints;
+package orz.joey.service.dto.validation.constraints;
 
-import orz.joey.service.dto.constraints.validation.CellphoneValidator;
+import orz.joey.service.dto.validation.CellphoneValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(Cellphone.List.class)
 public @interface Cellphone {
 
-    String message() default "{orz.joey.service.dto.constraints.Cellphone.message}";
+    String message() default "{orz.joey.service.dto.validation.constraints.Cellphone.message}";
 
     Class<?>[] groups() default { };
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import orz.joey.service.dto.common.BaseResponse;
-import orz.joey.service.dto.common.CustomError;
+import orz.joey.service.dto.common.constant.CustomError;
 
 // 指向所有带有注解@RestController的控制器
 @ControllerAdvice(annotations = RestController.class)

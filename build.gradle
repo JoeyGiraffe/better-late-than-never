@@ -21,10 +21,10 @@ allprojects {
 
     repositories {
         mavenCentral()
-//        maven {
-//            // 添加仓库地址
-//            url ''
-//        }
+        maven {
+            // 添加仓库地址
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
     }
 
     bootJar {

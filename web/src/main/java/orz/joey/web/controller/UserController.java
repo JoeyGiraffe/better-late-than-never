@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import orz.joey.service.UserService;
-import orz.joey.service.dto.EditUserDto;
 import orz.joey.service.dto.UserDto;
-import orz.joey.service.dto.common.CustomError;
+import orz.joey.service.dto.common.constant.CustomError;
+import orz.joey.service.dto.validation.groups.AddUserGroup;
+import orz.joey.service.dto.validation.groups.UpdateUserGroup;
 
+import javax.validation.groups.Default;
 import java.util.List;
 
 @Validated
@@ -43,7 +45,7 @@ public class UserController {
 
     @ApiOperation(value = "注册新用户", notes = "成功返回注册用户信息", tags = "jelly")
     @PostMapping("/save")
-    public UserDto addNewUser(@Validated @RequestBody UserDto userDto) {
+    public UserDto addNewUser(@Validated({AddUserGroup.class, Default.class}) @RequestBody UserDto userDto) {
         return userService.save(userDto);
     }
 
@@ -61,7 +63,7 @@ public class UserController {
 
     @ApiOperation(value = "修改用户信息", notes = "用户ID必须")
     @PutMapping("/update")
-    public EditUserDto updateUser(@Validated @RequestBody EditUserDto editUserDto) { return userService.update(editUserDto); }
+    public UserDto updateUser(@Validated({UpdateUserGroup.class, Default.class}) @RequestBody UserDto userDto) { return userService.update(userDto); }
 
 
     @ApiOperation(value = "获取所有用户列表", notes = "暂未分页")

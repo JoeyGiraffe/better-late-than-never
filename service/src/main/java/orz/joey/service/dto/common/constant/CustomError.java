@@ -1,4 +1,4 @@
-package orz.joey.service.dto.common;
+package orz.joey.service.dto.common.constant;
 
 public enum CustomError {
 

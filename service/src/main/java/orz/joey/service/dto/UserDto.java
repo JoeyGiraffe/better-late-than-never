@@ -3,7 +3,9 @@ package orz.joey.service.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
-import orz.joey.service.dto.constraints.Cellphone;
+import orz.joey.service.dto.validation.constraints.Cellphone;
+import orz.joey.service.dto.validation.groups.AddUserGroup;
+import orz.joey.service.dto.validation.groups.UpdateUserGroup;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -16,21 +18,21 @@ public class UserDto implements Serializable {
     private static final long serialVersionUID = -9129518669746552036L;
 
     @ApiModelProperty(value = "用户ID", example = "1")
-    @NotNull
+    @NotNull(groups = {UpdateUserGroup.class})
     private Long id;
 
-    @ApiModelProperty(value = "用户名", required = true)
-    @NotBlank
+    @ApiModelProperty(value = "用户名")
+    @NotBlank(groups = {AddUserGroup.class})
     private String username;
 
-    @ApiModelProperty(value = "登录密码", required = true)
-    @NotBlank
+    @ApiModelProperty(value = "登录密码")
+    @NotBlank(groups = {AddUserGroup.class})
     @Length(min = 8, max = 16)
     @Pattern(regexp = "^[a-zA-Z]\\w{7,15}$")
     private String password;
 
-    @ApiModelProperty(value = "手机号", required = true)
-    @NotBlank
+    @ApiModelProperty(value = "手机号")
+    @NotBlank(groups = {AddUserGroup.class})
     @Cellphone
     private String cellphone;
 
