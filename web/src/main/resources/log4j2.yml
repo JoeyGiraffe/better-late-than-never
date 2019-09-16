@@ -37,28 +37,29 @@ Configuration:
               onMatch: ACCEPT
               onMismatch: DENY
         Policies:
-          SizeBasedTriggeringPolicy: # 超过128MB归档
-            size: "128MB"
-        DefaultRolloverStrategy:     # 允许归档的日志文件的最大数量，超过将对过旧的日志文件删除
+          SizeBasedTriggeringPolicy: # 超过设置的文件最大大小则归档
+            size: "64MB"
+        DefaultRolloverStrategy:     # 允许归档的日志文件的最大数量，超过将删除旧的日志文件
           max: 7
       # 业务日志
       - name: BUSINESS
         ignoreExceptions: false
         fileName: ${log.path}/business/business.log
-        filePattern: "${log.path}/business/business-%d{yyyy-MM-dd}-%i.log"
+        filePattern: "${log.path}/business/business-%d{yyyy-MM-dd}.log"
         PatternLayout:
           pattern: ${rollingfile.log.pattern}
         Policies:
-          TimeBasedTriggeringPolicy:  # 按天分类
+          TimeBasedTriggeringPolicy:  # 一旦日志文件名中的日期模式{%d}不再匹配当前，即滚动
             modulate: true
+            # 间隔单位以{%d}设置的最小单位为准，%d{yyyy-MM-dd}即 天
             interval: 1
-        DefaultRolloverStrategy:     # 保留最近一周
+        DefaultRolloverStrategy:
           max: 7
       # 异常日志
       - name: EXCEPTION
         ignoreExceptions: false
         fileName: ${log.path}/exception/exception.log
-        filePattern: "${log.path}/exception/exception-%d{yyyy-MM-dd}-%i.log"
+        filePattern: "${log.path}/exception/exception-%d{yyyy-MM-dd}.log"
         ThresholdFilter:
           level: error
           onMatch: ACCEPT
@@ -75,7 +76,7 @@ Configuration:
       - name: DATABASE
         ignoreExceptions: false
         fileName: ${log.path}/db/db.log
-        filePattern: "${log.path}/db/db-%d{yyyy-MM-dd}-%i.log"
+        filePattern: "${log.path}/db/db-%d{yyyy-MM-dd}.log"
         PatternLayout:
           pattern: ${rollingfile.log.pattern}
         Policies:
